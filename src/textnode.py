@@ -8,7 +8,7 @@ class TextType(Enum):
     LINKS = "[]()"
     IMAGES = "![]()"
 
-class TextNode():
+class TextNode:
     def __init__(self, text, text_type, url=None):
         self.text = text
         self.text_type = text_type

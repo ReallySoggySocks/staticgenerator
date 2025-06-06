@@ -1,4 +1,4 @@
-class HTMLNode():
+class HTMLNode:
     def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag
         self.value = value
@@ -25,12 +25,14 @@ class HTMLNode():
     
 class LeafNode(HTMLNode):
     def __init__(self, tag, value, props=None):
-        super.__init__(tag, value, props)
+        super().__init__(tag, value, props)
 
     def to_html(self):
         if self.value == None:
             raise ValueError("All leaf nodes must have a value")
         elif self.tag == None:
             return f"{self.value}"
-        else:
+        elif self.props != None:
             return f"<{self.tag}{self.props}>{self.value}</{self.tag}>"
+        else:
+            return f"<{self.tag}>{self.value}</{self.tag}>"

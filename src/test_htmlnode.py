@@ -78,13 +78,13 @@ class TestHTMLNode(unittest.TestCase):
             node = TextNode("This is a tetx node", TextType.BLAND)
 
     def test_textnode_image(self):
-        node = TextNode("This is a text node", TextType.IMAGES, "https://google.com")
+        node = TextNode("This is a text node", TextType.IMAGE, "https://google.com")
         html_node = text_node_to_html_node(node)
         self.assertEqual(html_node.tag, "img")
         self.assertEqual(html_node.props, {"src" : node.url, "alt" : node.text})
 
     def test_textnode_link(self):
-        node = TextNode("This is a text node", TextType.LINKS, "https://www.google.com")
+        node = TextNode("This is a text node", TextType.LINK, "https://www.google.com")
         html_node = text_node_to_html_node(node)
         self.assertEqual(html_node.tag, "a")
         self.assertEqual(html_node.props, {"href" : "https://www.google.com"})

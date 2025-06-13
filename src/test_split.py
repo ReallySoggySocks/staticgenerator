@@ -1,6 +1,6 @@
 import unittest
 
-from delimiter import *
+from splitting_functions import *
 from textnode import *
 
 class TestSplitDelimiter(unittest.TestCase):
@@ -100,6 +100,11 @@ This is the same paragraph on a new line
                 "- This is a list\n- with items",
             ],
         )
+
+    def test_empty_block(self):
+        md = ""
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(blocks, [])
 
 
 if __name__ == "__main__":

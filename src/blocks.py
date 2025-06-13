@@ -21,24 +21,20 @@ def block_to_blocktype(block):
     
     #check that every line contains >
     elif block.startswith(">"):
-        for line in block:
-            if line.startswith(">"):
-                continue
-            else:
+        for line in block.split("\n"):
+            if not line.startswith(">"):
                 return BlockType.PARAGRAPH
         return BlockType.QUOTE
     #check that every line starts with "- "
     elif block.startswith("- "):
-        for line in block:
-            if line.startswith("- "):
-                continue
-            else:
+        for line in block.split("\n"):
+            if not line.startswith("- "):
                 return BlockType.PARAGRAPH
         return BlockType.UNORDERED_LIST
     #check that line starts at "1. " and increments each line
     elif block.startswith("1. "):
         line_counter = 1
-        for line in block:
+        for line in block.split("\n"):
             if line[0] == f"{line_counter}":
                 line_counter += 1
                 continue

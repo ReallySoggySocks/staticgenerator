@@ -5,6 +5,7 @@ class TextType(Enum):
     BOLD = 2
     ITALIC = 3
     CODE = 4
+    CODE_BLOCK = 7
     LINK = 5
     IMAGE = 6
     

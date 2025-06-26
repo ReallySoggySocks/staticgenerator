@@ -6,31 +6,26 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         raise Exception("Node must be in a list")
     
     new_nodes = []
-    delimiter_counter = 0
-
-    for node in old_nodes:
-        for char in node.text:
-            if char == delimiter:
-                delimiter_counter += 1
-
-    if delimiter_counter % 2 != 0:
-        raise Exception("Invalid markdown syntax")
     
     for node in old_nodes:
         if node.text_type != TextType.TEXT:
             new_nodes.append(node)
             continue
-
+            
+        delimiter_count = node.text.count(delimiter)
+        if delimiter_count % 2 != 0:
+            raise Exception("Invalid markdown syntax")
+        
         split_nodes = node.text.split(delimiter)
-
-        for text in split_nodes:
+        
+        for i, text in enumerate(split_nodes):
             if text == "":
                 continue
-            elif not text.startswith(" ") and not text.endswith(" "):
-                new_nodes.append(TextNode(text, text_type))
-            else:
+            if i % 2 == 0:
                 new_nodes.append(TextNode(text, TextType.TEXT))
-
+            else:
+                new_nodes.append(TextNode(text, text_type))
+    
     return new_nodes
 
 def extract_markdown_images(text):
@@ -105,10 +100,10 @@ def text_to_textnodes(text):
 
     node = TextNode(text, TextType.TEXT)
 
-    after_bold = split_nodes_delimiter([node], "*", TextType.BOLD)
+    after_bold = split_nodes_delimiter([node], "**", TextType.BOLD)
     after_italic = split_nodes_delimiter(after_bold, "_", TextType.ITALIC)
-    after_code = split_nodes_delimiter(after_italic, "`", TextType.CODE)
-    after_image = split_nodes_image(after_code)
+    after_icode = split_nodes_delimiter(after_italic, "`", TextType.CODE)
+    after_image = split_nodes_image(after_icode)
     after_link = split_nodes_link(after_image)
 
     return after_link
@@ -120,7 +115,8 @@ def markdown_to_blocks(markdown):
     blocks = []
     split_md = markdown.split("\n\n")
     for line in split_md:
-        line = line.strip("\n")
-        blocks.append(line)
+        line = line.strip()
+        if line:
+            blocks.append(line)
 
     return blocks

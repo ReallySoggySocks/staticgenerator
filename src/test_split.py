@@ -80,6 +80,20 @@ class TestSplitDelimiter(unittest.TestCase):
                           TextNode(" and a ", TextType.TEXT, None), TextNode("link", TextType.LINK, "https://boot.dev")
                           ]
                           )
+        
+    def test_delimiter_split(self):
+        test_text = "This is another paragraph with _italic_ text and `code` here"
+        node = TextNode(test_text, TextType.TEXT)
+        #print("Initial node:", [node])
+
+        after_bold = split_nodes_delimiter([node], "**", TextType.BOLD)
+        #print("After bold:", after_bold)
+
+        after_italic = split_nodes_delimiter(after_bold, "_", TextType.ITALIC)
+        #print("After italic:", after_italic)
+
+        after_icode = split_nodes_delimiter(after_italic, "`", TextType.CODE)
+        #print("After code:", after_icode)
 
     def test_markdown_to_blocks(self):
         md = """

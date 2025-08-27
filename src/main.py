@@ -1,10 +1,10 @@
 from textnode import *
 from copy_static import *
+from generate_page import *
 
 def main():
-    garbage = TextNode("some text", TextType.TEXT, "www.bean.com")
     copy_static("./static", "./public")
-    print(garbage)
+    generate_page("./content/index.md", "./template.html", "./public/index.html")
 
 if __name__ == "__main__":
     main()
